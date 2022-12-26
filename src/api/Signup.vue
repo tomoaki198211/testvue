@@ -1,24 +1,21 @@
 <script setup lang="ts">
 import { reactive, computed } from "vue";
-import axios from "axios";
 import { useAuthStore } from "../stores/auth";
 
 const user = reactive({
   email: "",
   password: "",
 });
+
 const authStore = useAuthStore();
-async function onLogin() {
+async function onSignup() {
   const authStore = useAuthStore();
   const email = this.user.email;
   const password = this.user.password;
-  await authStore.login(email, password);
-}
-async function onLogout() {
-  const authStore = useAuthStore();
-  await authStore.logout();
+  await authStore.signup(email, password);
 }
 </script>
+
 <template>
   <div>
     <div>
@@ -34,9 +31,6 @@ async function onLogout() {
         placeholder="******************"
       />
     </div>
-    <button @click="onLogin()">Log In</button>
-  </div>
-  <div>
-    <button @click="onLogout()">Log out</button>
+    <button @click="onSignup()">Sign up</button>
   </div>
 </template>
