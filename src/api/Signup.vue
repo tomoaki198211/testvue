@@ -8,11 +8,11 @@ const user = reactive({
 });
 
 const authStore = useAuthStore();
-async function onSignup() {
+function onSignup(): void {
   const authStore = useAuthStore();
   const email = this.user.email;
   const password = this.user.password;
-  await authStore.signup(email, password);
+  authStore.signup(email, password);
 }
 </script>
 

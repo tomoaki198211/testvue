@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import axios from "axios";
+import axios, { type AxiosResponse } from "axios";
 
 export const useAuthStore = defineStore({
   id: "auth",
@@ -10,14 +10,14 @@ export const useAuthStore = defineStore({
     returnUrl: null,
   }),
   actions: {
-    async signup(email: string, password: string) {
+    async signup(email: string, password: string): Promise<void> {
       try {
         await axios
           .post("http://localhost:3000/auth", {
             email: email,
             password: password,
           })
-          .then((response) => {
+          .then((response: AxiosResponse<any>) => {
             localStorage.setItem("client", response.headers["client"]);
             localStorage.setItem("uid", response.headers["uid"]);
             localStorage.setItem(
@@ -33,7 +33,7 @@ export const useAuthStore = defineStore({
         console.log(error);
       }
     },
-    async login(email: string, password: string) {
+    async login(email: string, password: string): Promise<void> {
       try {
         await axios
           .post("http://localhost:3000/auth/sign_in", {
@@ -56,10 +56,10 @@ export const useAuthStore = defineStore({
         console.log(error);
       }
     },
-    logout(): void {
+    async logout(): Promise<void> {
       // const user = JSON.parse(localStorage.getItem("user"));
 
-      axios.delete("http://localhost:3000/auth/sign_out", {
+      await axios.delete("http://localhost:3000/auth/sign_out", {
         headers: {
           uid: this.uid,
           "access-token": this.access_token,
@@ -73,6 +73,9 @@ export const useAuthStore = defineStore({
       this.access_token = "";
       this.client = "";
       this.uid = "";
+    },
+    isauthencated(): boolean {
+      return !!this.client;
     },
   },
 });

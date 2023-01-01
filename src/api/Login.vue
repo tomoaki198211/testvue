@@ -8,15 +8,15 @@ const user = reactive({
   password: "",
 });
 const authStore = useAuthStore();
-async function onLogin() {
+function onLogin(): void {
   const authStore = useAuthStore();
   const email = this.user.email;
   const password = this.user.password;
-  await authStore.login(email, password);
+  authStore.login(email, password);
 }
-async function onLogout() {
+function onLogout(): void {
   const authStore = useAuthStore();
-  await authStore.logout();
+  authStore.logout();
 }
 </script>
 <template>

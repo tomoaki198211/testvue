@@ -10,7 +10,8 @@ const post = ref("");
 
 const props = defineProps<Props>();
 const authStore = useAuthStore();
-(() => {
+post_show();
+function post_show(): void {
   console.log(authStore.uid);
   console.log(authStore.access_token);
   console.log(authStore.client);
@@ -25,7 +26,7 @@ const authStore = useAuthStore();
     .then((response) => {
       post.value = response.data;
     });
-})();
+}
 </script>
 
 <template>
